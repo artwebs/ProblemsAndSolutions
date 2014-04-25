@@ -1,70 +1,71 @@
-1¡¢FreeRDP-client¼°FreeRDP-server ÔÚubnutuÏÂµÄ±àÒëºÍÊ¹ÓÃÓöµ½µ½µÄÎÊÌâ¼°½â¾ö
-    ±àÒë²½Öè£º
-	£¨1£©sudo apt-get install git
-	£¨2£© git clone git://github.com/FreeRDP/FreeRDP.git
-	£¨3£©tar cvfz ./FreeRDP.tar.gz ./FreeRDP/
-	£¨4£©cd FreeRDP
-	£¨5£©sudo apt-get install build-essential git-core cmake libssl-dev libx11-dev libxext-dev libxinerama-dev libxcursor-dev libxdamage-dev libxv-dev libxkbfile-dev libasound2-dev libcups2-dev libxml2 libxml2-dev libxrandr-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev libavutil-dev libavcodec-dev libcunit1-dev libdirectfb-dev xmlto doxygen libxtst-dev uuid-dev libudev-dev  libusb-1.0 libdbus-glib-1-dev
-	£¨6£© vi ./channels/urbdrc/ChannelOptions.cmake
-	      set(OPTION_CLIENT_DEFAULT OFF)¸ÄÎªset(OPTION_CLIENT_DEFAULT ON)
-	      set(OPTION_SERVER_DEFAULT OFF)¸ÄÎªset(OPTION_SERVER_DEFAULT ON)
-	£¨7£©cmake .
-	£¨8£©make
-	£¨9£©sudo make install
-    FreeRDP-serverÏµÍ³ÅäÖÃ£º
-	(1)¿½±´ server/X11/server.crt and server.key µ½ ~/.freerdp/server/,ÆäÖĞÈç¹ûÃ»ÓĞÏàÓ¦Ä¿Â¼Ğè´´½¨
-	(2)ÓÃwinpr/tools/hash/winpr-hash -u xxx -p xxx ´´½¨µÃµ½µÄÄÚÈİ±£´æÎªÎÄ¼şSAM£¬²¢ÎÄ¼ş¿½±´µ½ /etc/winpr/Ä¿Â¼ÏÂ
-    FreeRDPÊ¹ÓÃ£º
-	£¨1£©cd /usr/local/bin
-	£¨2£©./xfreerdp /u:administrator /sec:rdp /usb:id,dev:XXXX:XXXX /v:192.168.5.84
-    FreeRDP-serverÊ¹ÓÃ£º
-	£¨1£©cd /usr/local/bin
-	£¨2£©./xfreerdp-server
+1ã€FreeRDP-clientåŠFreeRDP-server åœ¨ubnutuä¸‹çš„ç¼–è¯‘å’Œä½¿ç”¨é‡åˆ°åˆ°çš„é—®é¢˜åŠè§£å†³
+    ç¼–è¯‘æ­¥éª¤ï¼š
+	ï¼ˆ1ï¼‰sudo apt-get install git
+	ï¼ˆ2ï¼‰ git clone git://github.com/FreeRDP/FreeRDP.git
+	ï¼ˆ3ï¼‰tar cvfz ./FreeRDP.tar.gz ./FreeRDP/
+	ï¼ˆ4ï¼‰cd FreeRDP
+	ï¼ˆ5ï¼‰sudo apt-get install build-essential git-core cmake libssl-dev libx11-dev libxext-dev libxinerama-dev libxcursor-dev libxdamage-dev libxv-dev libxkbfile-dev libasound2-dev libcups2-dev libxml2 libxml2-dev libxrandr-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev libavutil-dev libavcodec-dev libcunit1-dev libdirectfb-dev xmlto doxygen libxtst-dev uuid-dev libudev-dev  libusb-1.0 libdbus-glib-1-dev
+	ï¼ˆ6ï¼‰ vi ./channels/urbdrc/ChannelOptions.cmake
+	      set(OPTION_CLIENT_DEFAULT OFF)æ”¹ä¸ºset(OPTION_CLIENT_DEFAULT ON)
+	      set(OPTION_SERVER_DEFAULT OFF)æ”¹ä¸ºset(OPTION_SERVER_DEFAULT ON)
+	ï¼ˆ7ï¼‰cmake .
+	ï¼ˆ8ï¼‰make
+	ï¼ˆ9ï¼‰sudo make install
+    FreeRDP-serverç³»ç»Ÿé…ç½®ï¼š
+	(1)æ‹·è´ server/X11/server.crt and server.key åˆ° ~/.freerdp/server/,å…¶ä¸­å¦‚æœæ²¡æœ‰ç›¸åº”ç›®å½•éœ€åˆ›å»º
+	(2)ç”¨winpr/tools/hash/winpr-hash -u xxx -p xxx åˆ›å»ºå¾—åˆ°çš„å†…å®¹ä¿å­˜ä¸ºæ–‡ä»¶SAMï¼Œå¹¶æ–‡ä»¶æ‹·è´åˆ° /etc/winpr/ç›®å½•ä¸‹
+    FreeRDPä½¿ç”¨ï¼š
+	ï¼ˆ1ï¼‰cd /usr/local/bin
+	ï¼ˆ2ï¼‰./xfreerdp /u:administrator /sec:rdp /usb:id,dev:XXXX:XXXX /v:192.168.5.84
+    FreeRDP-serverä½¿ç”¨ï¼š
+	ï¼ˆ1ï¼‰cd /usr/local/bin
+	ï¼ˆ2ï¼‰./xfreerdp-server
 
-2¡¢FreeRDP-client¼°FreeRDP-server ÔÚwindows8£¨x64£©ÏÂµÄ±àÒëºÍÊ¹ÓÃÓöµ½µ½µÄÎÊÌâ¼°½â¾ö
-    ±àÒë²½Öè£º£¨ÔÚ32Î»ÏµÍ³ÏÂ±àÒë»áÓöµ½64Î»µÄÏà¹Ø·½·¨ÎÊÌâ±àÒë²»Í¨¹ıÎÊÌâ£©
-	£¨1£©°²×°git for windows £¨http://msysgit.github.io/£©
-	£¨2£©Ê¹ÓÃgit gui ¿ËÂ¡ÏîÄ¿µ½±¾µØ£¨½¨ÒéÊ¹ÓÃ¸Ä¹¤¾ß£¬·ñÔò»áÓöµ½LINK WTSApi32.dll ÎÊÌâ£©
-	£¨3£©°²×° Visual Studio 2013
-	£¨4£©°²×°cmake 2.8.8 ÏÂÔØÍøÖ·£ºhttp://www.cmake.org/cmake/resources/software.html
-	£¨5£©Visual C++ 2008 Redistributables £¨http://www.microsoft.com/downloads/details.aspx?familyid=9B2DA534-3E03-4391-8A4D-074B9F2BC1BF£©
-	£¨6£©°²×° OpenSSL£ºRDPÖĞµÄĞ­Òé¼ÓÃÜĞèÒªÓÃµ½openssl£¬ÏÂÔØÍøÖ·£ºhttp://slproweb.com/products/Win32OpenSSL.html £¨²»ÒªÊ¹ÓÃLight°æ±¾£©
-	£¨7£©ÔÚÏµÍ³±äÁ¿PATHÖĞÌí¼Ó£¨×¢ÒâÊ¹ÓÃ·ÖºÅ·Ö¸î£©£ºC:/Program Files/Microsoft Visual Studio 12.0/VC/bin/; C:/Program Files/Microsoft Visual Studio 12.0/Common7/IDE
-	£¨8£©´ò¿ªcmake£¬ÉèÖÃ´úÂëÂ·¾¶ºÍÉú³ÉÎÄ¼şµÄÂ·¾¶£¬µã»÷configure£¬µ¯³ö¶Ô»°¿òÑ¡Ôñ£¨Visual Studio 12 x64£©,È»ºóFinish
-	£¨9£©¹´Ñ¡DWITDH_SERVER,DWITDH_WIN8È»ºógenerate£¨Éú³ÉÁ½´Î£¬·ñÔòÃ»ÓĞserverÄ¿Â¼£©³öVS2013µÄÏîÄ¿ÎÄ¼ş.
-	£¨10£©´ò¿ªVS2013µÄÏîÄ¿ÎÄ¼ş£¬È»ºóÉú³ÉÏîÄ¿
-    FreeRDP-serverÏµÍ³ÅäÖÃ£º
-	(1)¿½±´ server/Windows/server.crt and server.key µ½ C:\Users\XXX\.config\freerdp\server,ÆäÖĞÈç¹ûÃ»ÓĞÏàÓ¦Ä¿Â¼Ğè´´½¨
-	(2)ÓÃwinpr/tools/hash/winpr-hash.exe -u xxx -p xxx ´´½¨µÃµ½µÄÄÚÈİ±£´æÎªÎÄ¼şSAM£¬²¢ÎÄ¼ş¿½±´µ½ C:/Ä¿Â¼ÏÂ
-    FreeRDPÊ¹ÓÃ£º
-	£¨1£©cd DebugÄ¿Â¼ÏÂ
-	£¨2£©ÃüÁîÖ´ĞĞwfreerdp.exe /u:administrator /sec:rdp /usb:id,dev:XXXX:XXXX /v:192.168.5.84
-    FreeRDP-serverÊ¹ÓÃ£º
-	£¨1£©cd DebugÄ¿Â¼ÏÂ
-	£¨2£©ÃüÁîÖ´ĞĞ wfreerdp-server.exe
+2ã€FreeRDP-clientåŠFreeRDP-server åœ¨windows8ï¼ˆx64ï¼‰ä¸‹çš„ç¼–è¯‘å’Œä½¿ç”¨é‡åˆ°åˆ°çš„é—®é¢˜åŠè§£å†³
+    ç¼–è¯‘æ­¥éª¤ï¼šï¼ˆåœ¨32ä½ç³»ç»Ÿä¸‹ç¼–è¯‘ä¼šé‡åˆ°64ä½çš„ç›¸å…³æ–¹æ³•é—®é¢˜ç¼–è¯‘ä¸é€šè¿‡é—®é¢˜ï¼‰
+	ï¼ˆ1ï¼‰å®‰è£…git for windows ï¼ˆhttp://msysgit.github.io/ï¼‰
+	ï¼ˆ2ï¼‰ä½¿ç”¨git gui å…‹éš†é¡¹ç›®åˆ°æœ¬åœ°ï¼ˆå»ºè®®ä½¿ç”¨æ”¹å·¥å…·ï¼Œå¦åˆ™ä¼šé‡åˆ°LINK WTSApi32.dll é—®é¢˜ï¼‰
+	ï¼ˆ3ï¼‰å®‰è£… Visual Studio 2013
+	ï¼ˆ4ï¼‰å®‰è£…cmake 2.8.8 ä¸‹è½½ç½‘å€ï¼šhttp://www.cmake.org/cmake/resources/software.html
+	ï¼ˆ5ï¼‰Visual C++ 2008 Redistributables ï¼ˆhttp://www.microsoft.com/downloads/details.aspx?familyid=9B2DA534-3E03-4391-8A4D-074B9F2BC1BFï¼‰
+	ï¼ˆ6ï¼‰å®‰è£… OpenSSLï¼šRDPä¸­çš„åè®®åŠ å¯†éœ€è¦ç”¨åˆ°opensslï¼Œä¸‹è½½ç½‘å€ï¼šhttp://slproweb.com/products/Win32OpenSSL.html ï¼ˆä¸è¦ä½¿ç”¨Lightç‰ˆæœ¬ï¼‰
+	ï¼ˆ7ï¼‰åœ¨ç³»ç»Ÿå˜é‡PATHä¸­æ·»åŠ ï¼ˆæ³¨æ„ä½¿ç”¨åˆ†å·åˆ†å‰²ï¼‰ï¼šC:/Program Files/Microsoft Visual Studio 12.0/VC/bin/; C:/Program Files/Microsoft Visual Studio 12.0/Common7/IDE
+	ï¼ˆ8ï¼‰æ‰“å¼€cmakeï¼Œè®¾ç½®ä»£ç è·¯å¾„å’Œç”Ÿæˆæ–‡ä»¶çš„è·¯å¾„ï¼Œç‚¹å‡»configureï¼Œå¼¹å‡ºå¯¹è¯æ¡†é€‰æ‹©ï¼ˆVisual Studio 12 x64ï¼‰,ç„¶åFinish
+	ï¼ˆ9ï¼‰å‹¾é€‰DWITDH_SERVER,DWITDH_WIN8ç„¶ågenerateï¼ˆç”Ÿæˆä¸¤æ¬¡ï¼Œå¦åˆ™æ²¡æœ‰serverç›®å½•ï¼‰å‡ºVS2013çš„é¡¹ç›®æ–‡ä»¶.
+	ï¼ˆ10ï¼‰æ‰“å¼€VS2013çš„é¡¹ç›®æ–‡ä»¶ï¼Œç„¶åç”Ÿæˆé¡¹ç›®
+    FreeRDP-serverç³»ç»Ÿé…ç½®ï¼š
+	(1)æ‹·è´ server/Windows/server.crt and server.key åˆ° C:\Users\XXX\.config\freerdp\server,å…¶ä¸­å¦‚æœæ²¡æœ‰ç›¸åº”ç›®å½•éœ€åˆ›å»º
+	(2)ç”¨winpr/tools/hash/winpr-hash.exe -u xxx -p xxx åˆ›å»ºå¾—åˆ°çš„å†…å®¹ä¿å­˜ä¸ºæ–‡ä»¶SAMï¼Œå¹¶æ–‡ä»¶æ‹·è´åˆ° C:/ç›®å½•ä¸‹
+    FreeRDPä½¿ç”¨ï¼š
+	ï¼ˆ1ï¼‰cd Debugç›®å½•ä¸‹
+	ï¼ˆ2ï¼‰å‘½ä»¤æ‰§è¡Œwfreerdp.exe /u:administrator /sec:rdp /usb:id,dev:XXXX:XXXX /v:192.168.5.84
+    FreeRDP-serverä½¿ç”¨ï¼š
+	ï¼ˆ1ï¼‰cd Debugç›®å½•ä¸‹
+	ï¼ˆ2ï¼‰å‘½ä»¤æ‰§è¡Œ wfreerdp-server.exe
 
-3¡¢FreeRDPµÄandroid¿Í»§¶ËafreerdpµÄ±àÒë¹ı³Ì 
-	£¨1£©ÒòÎªandroid°æ±¾µÄrdpĞ­Òé¶¼ÊÇ»ùÓÚfreerdpµÄ´úÂëµÄ¡£¶øfreerdpĞèÒªÒÔÀ´openssl¿â¡£ËùÒÔÊ×ÏÈĞèÒª±àÒëandroid-external-openssl-ndk-static¡£ÏÂÔØµØÖ·https://github.com/bmiklautz/android-external-openssl-ndk-static£»
-	Õâ¸öÊÇÒ»¸öndkµÄ¹¤³Ì¡£ĞèÒªAndroid NDK (>= r8d)£¬ÏÂÔØÍêºóÅäÖÃºÃndkµÄ»·¾³±äÁ¿¡£½øÈëcd android-external-openssl-ndk-static£¬È»ºóndk-build£¬±àÒëÍêÉú³É¾²Ì¬¿â¡£
-	£¨2£©È»ºóÊÇÔÚfreerdpµÄ¸ùÄ¿Â¼Ê¹ÓÃandroidµÄkeychainÀ´±àÒëÕû¸öÏîÄ¿Éú³Éso¶¯Ì¬¿â¡£¸ù¾İÎÄµµÖÕÌá¹©µÄ±àÒëÃüÁîÈçÏÂ£º
+3ã€FreeRDPçš„androidå®¢æˆ·ç«¯afreerdpçš„ç¼–è¯‘è¿‡ç¨‹ 
+	ï¼ˆ1ï¼‰å› ä¸ºandroidç‰ˆæœ¬çš„rdpåè®®éƒ½æ˜¯åŸºäºfreerdpçš„ä»£ç çš„ã€‚è€Œfreerdpéœ€è¦ä»¥æ¥opensslåº“ã€‚æ‰€ä»¥é¦–å…ˆéœ€è¦ç¼–è¯‘android-external-openssl-ndk-staticã€‚ä¸‹è½½åœ°å€https://github.com/bmiklautz/android-external-openssl-ndk-staticï¼›
+	è¿™ä¸ªæ˜¯ä¸€ä¸ªndkçš„å·¥ç¨‹ã€‚éœ€è¦Android NDK (>= r8d)ï¼Œä¸‹è½½å®Œåé…ç½®å¥½ndkçš„ç¯å¢ƒå˜é‡ã€‚è¿›å…¥cd android-external-openssl-ndk-staticï¼Œç„¶åndk-buildï¼Œç¼–è¯‘å®Œç”Ÿæˆé™æ€åº“ã€‚
+	ï¼ˆ2ï¼‰ç„¶åæ˜¯åœ¨freerdpçš„æ ¹ç›®å½•ä½¿ç”¨androidçš„keychainæ¥ç¼–è¯‘æ•´ä¸ªé¡¹ç›®ç”ŸæˆsoåŠ¨æ€åº“ã€‚æ ¹æ®æ–‡æ¡£ç»ˆæä¾›çš„ç¼–è¯‘å‘½ä»¤å¦‚ä¸‹ï¼š
 	cmake -DCMAKE_TOOLCHAIN_FILE=cmake/AndroidToolchain.cmake \
 	-DANDROID_NDK="_your_ndk_path_here_" \
 	-DFREERDP_ANDROID_EXTERNAL_SSL_PATH="_your_ssl_build_root_path_" \
 	-DANDROID_BUILD_JAVA=OFF
 
-	"_your_ndk_path_here_"¾ÍÊÇÄãµÄndkµÄÂ·¾¶£¬Ğ´¾ø¶ÔÂ·¾¶¡£ÎÒµÄÊÇ£º/Users/tx/work/android-ndk-r8
-	"_your_ssl_build_root_path_"Õâ¸ö¾ÍÊÇµÚ3²½Àï±àÒë³öÀ´µÄandroid-external-openssl-ndk-staticµÄÂ·¾¶£¬
-	ÎÒµÄÊÇ£º/Users/tx/work/android-external-openssl-ndk-static
-	ÎÒµÄ»·¾³ÏÂÌæ»»ºóµÄ±àÒëÃüÁîÈçÏÂ£º
+	"_your_ndk_path_here_"å°±æ˜¯ä½ çš„ndkçš„è·¯å¾„ï¼Œå†™ç»å¯¹è·¯å¾„ã€‚æˆ‘çš„æ˜¯ï¼š/Users/tx/work/android-ndk-r8
+	"_your_ssl_build_root_path_"è¿™ä¸ªå°±æ˜¯ç¬¬3æ­¥é‡Œç¼–è¯‘å‡ºæ¥çš„android-external-openssl-ndk-staticçš„è·¯å¾„ï¼Œ
+	æˆ‘çš„æ˜¯ï¼š/Users/tx/work/android-external-openssl-ndk-static
+	æˆ‘çš„ç¯å¢ƒä¸‹æ›¿æ¢åçš„ç¼–è¯‘å‘½ä»¤å¦‚ä¸‹ï¼š
 	cmake -DCMAKE_TOOLCHAIN_FILE=cmake/AndroidToolchain.cmake \
 	-DANDROID_NDK="/Users/tx/work/android-ndk-r8" \
 	-DFREERDP_ANDROID_EXTERNAL_SSL_PATH="/Users/tx/work/android-external-openssl-ndk-static" \
 	-DANDROID_BUILD_JAVA=OFF
-	Ö´ĞĞÍêºó»áÉú³ÉconfigÎÄ¼ş£¬½Ó×ÅÊäÈëmake¿ªÊ¼±àÒë¡£±àÒëºó»áÔÚFreeRDP/client/Android/libs/armeabi-v7aÄ¿Â¼ÏÂÉú³Élibfreerdp-android.so¶¯Ì¬¿â
-	µ½´Ëjni²¿·Ö±àÒëÍê³É¡£Ê£ÏÂ¾Í¿ÉÒÔ°ÑFreeRDP/client/Androidµ¼Èëµ½eclipseÀ´ÔËĞĞ³ÌĞòÁË¡£
+	æ‰§è¡Œå®Œåä¼šç”Ÿæˆconfigæ–‡ä»¶ï¼Œæ¥ç€è¾“å…¥makeå¼€å§‹ç¼–è¯‘ã€‚ç¼–è¯‘åä¼šåœ¨FreeRDP/client/Android/libs/armeabi-v7aç›®å½•ä¸‹ç”Ÿæˆlibfreerdp-android.soåŠ¨æ€åº“
+	åˆ°æ­¤jniéƒ¨åˆ†ç¼–è¯‘å®Œæˆã€‚å‰©ä¸‹å°±å¯ä»¥æŠŠFreeRDP/client/Androidå¯¼å…¥åˆ°eclipseæ¥è¿è¡Œç¨‹åºäº†ã€‚
 
-²Î¿¼ÎÄÏ×£º
-	£¨1£©windows»·¾³ÏÂ±àÒëFreeRDP£¨http://www.cnblogs.com/sherwin-security/archive/2012/07/13/2590965.html£©
-	£¨2£©Ubuntu12±àÒëFreeRDP£¨http://blog.csdn.net/liuyifeng_510/article/details/9833197£©
-	£¨3£©how to use freerdp-server? it seems that some file is missing£¨https://github.com/FreeRDP/FreeRDP/issues/1060£©
-	£¨4£©·ÖÏífreerdpµÄandroid¿Í»§¶ËafreerdpµÄ±àÒë¹ı³Ì £¨http://www.devdiv.com/forum.php?mod=viewthread&tid=195853£©
+å‚è€ƒæ–‡çŒ®ï¼š
+	ï¼ˆ1ï¼‰windowsç¯å¢ƒä¸‹ç¼–è¯‘FreeRDPï¼ˆhttp://www.cnblogs.com/sherwin-security/archive/2012/07/13/2590965.htmlï¼‰
+	ï¼ˆ2ï¼‰Ubuntu12ç¼–è¯‘FreeRDPï¼ˆhttp://blog.csdn.net/liuyifeng_510/article/details/9833197ï¼‰
+	ï¼ˆ3ï¼‰how to use freerdp-server? it seems that some file is missingï¼ˆhttps://github.com/FreeRDP/FreeRDP/issues/1060ï¼‰
+	ï¼ˆ4ï¼‰åˆ†äº«freerdpçš„androidå®¢æˆ·ç«¯afreerdpçš„ç¼–è¯‘è¿‡ç¨‹ ï¼ˆhttp://www.devdiv.com/forum.php?mod=viewthread&tid=195853ï¼‰
+	
