@@ -43,7 +43,28 @@
 	（1）cd Debug目录下
 	（2）命令执行 wfreerdp-server.exe
 
+3、FreeRDP的android客户端afreerdp的编译过程 
+	（1）因为android版本的rdp协议都是基于freerdp的代码的。而freerdp需要以来openssl库。所以首先需要编译android-external-openssl-ndk-static。下载地址https://github.com/bmiklautz/android-external-openssl-ndk-static；
+	这个是一个ndk的工程。需要Android NDK (>= r8d)，下载完后配置好ndk的环境变量。进入cd android-external-openssl-ndk-static，然后ndk-build，编译完生成静态库。
+	（2）然后是在freerdp的根目录使用android的keychain来编译整个项目生成so动态库。根据文档终提供的编译命令如下：
+	cmake -DCMAKE_TOOLCHAIN_FILE=cmake/AndroidToolchain.cmake \
+	-DANDROID_NDK="_your_ndk_path_here_" \
+	-DFREERDP_ANDROID_EXTERNAL_SSL_PATH="_your_ssl_build_root_path_" \
+	-DANDROID_BUILD_JAVA=OFF
+
+	"_your_ndk_path_here_"就是你的ndk的路径，写绝对路径。我的是：/Users/tx/work/android-ndk-r8
+	"_your_ssl_build_root_path_"这个就是第3步里编译出来的android-external-openssl-ndk-static的路径，
+	我的是：/Users/tx/work/android-external-openssl-ndk-static
+	我的环境下替换后的编译命令如下：
+	cmake -DCMAKE_TOOLCHAIN_FILE=cmake/AndroidToolchain.cmake \
+	-DANDROID_NDK="/Users/tx/work/android-ndk-r8" \
+	-DFREERDP_ANDROID_EXTERNAL_SSL_PATH="/Users/tx/work/android-external-openssl-ndk-static" \
+	-DANDROID_BUILD_JAVA=OFF
+	执行完后会生成config文件，接着输入make开始编译。编译后会在FreeRDP/client/Android/libs/armeabi-v7a目录下生成libfreerdp-android.so动态库
+	到此jni部分编译完成。剩下就可以把FreeRDP/client/Android导入到eclipse来运行程序了。
+
 参考文献：
 	（1）windows环境下编译FreeRDP（http://www.cnblogs.com/sherwin-security/archive/2012/07/13/2590965.html）
 	（2）Ubuntu12编译FreeRDP（http://blog.csdn.net/liuyifeng_510/article/details/9833197）
 	（3）how to use freerdp-server? it seems that some file is missing（https://github.com/FreeRDP/FreeRDP/issues/1060）
+	（4）分享freerdp的android客户端afreerdp的编译过程 （http://www.devdiv.com/forum.php?mod=viewthread&tid=195853）
