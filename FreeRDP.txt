@@ -1,0 +1,22 @@
+1、FreeRDP-client及FreeRDP-server 在ubnutu下的编译和使用遇到到的问题及解决
+    编译步骤：
+	（1）sudo apt-get install git
+	（2） git clone git://github.com/FreeRDP/FreeRDP.git
+	（3）tar cvfz ./FreeRDP.tar.gz ./FreeRDP/
+	（4）cd FreeRDP
+	（5）sudo apt-get install build-essential git-core cmake libssl-dev libx11-dev libxext-dev libxinerama-dev libxcursor-dev libxdamage-dev libxv-dev libxkbfile-dev libasound2-dev libcups2-dev libxml2 libxml2-dev libxrandr-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev libavutil-dev libavcodec-dev libcunit1-dev libdirectfb-dev xmlto doxygen libxtst-dev uuid-dev libudev-dev  libusb-1.0 libdbus-glib-1-dev
+	（6） vi ./channels/urbdrc/ChannelOptions.cmake
+	      set(OPTION_CLIENT_DEFAULT OFF)改为set(OPTION_CLIENT_DEFAULT ON)
+	      set(OPTION_SERVER_DEFAULT OFF)改为set(OPTION_SERVER_DEFAULT ON)
+	（7）cmake .
+	（8）make
+	（9）sudo make install
+    FreeRDP-server系统配置：
+	(1)拷贝 server/X11/server.crt and server.key 到 ~/.freerdp/server/,其中如果没有相应目录需创建
+	(2)用winpr/tools/hash/winpr-hash -u xxx -p xxx 创建得到的内容保存为文件SAM，并文件拷贝到 /etc/winpr/目录下
+    FreeRDP使用：
+	（1）cd /usr/local/bin
+	（2）./xfreerdp /u:administrator /sec:rdp /usb:id,dev:XXXX:XXXX /v:192.168.5.84
+    FreeRDP-server使用：
+	（1）cd /usr/local/bin
+	（2）./xfreerdp-server
