@@ -20,3 +20,30 @@
     FreeRDP-server使用：
 	（1）cd /usr/local/bin
 	（2）./xfreerdp-server
+
+2、FreeRDP-client及FreeRDP-server 在windows8（x64）下的编译和使用遇到到的问题及解决
+    编译步骤：（在32位系统下编译会遇到64位的相关方法问题编译不通过问题）
+	（1）安装git for windows （http://msysgit.github.io/）
+	（2）使用git gui 克隆项目到本地（建议使用改工具，否则会遇到LINK WTSApi32.dll 问题）
+	（3）安装 Visual Studio 2013
+	（4）安装cmake 2.8.8 下载网址：http://www.cmake.org/cmake/resources/software.html
+	（5）Visual C++ 2008 Redistributables （http://www.microsoft.com/downloads/details.aspx?familyid=9B2DA534-3E03-4391-8A4D-074B9F2BC1BF）
+	（6）安装 OpenSSL：RDP中的协议加密需要用到openssl，下载网址：http://slproweb.com/products/Win32OpenSSL.html （不要使用Light版本）
+	（7）在系统变量PATH中添加（注意使用分号分割）：C:/Program Files/Microsoft Visual Studio 12.0/VC/bin/; C:/Program Files/Microsoft Visual Studio 12.0/Common7/IDE
+	（8）打开cmake，设置代码路径和生成文件的路径，点击configure，弹出对话框选择（Visual Studio 12 x64）,然后Finish
+	（9）勾选DWITDH_SERVER,DWITDH_WIN8然后generate（生成两次，否则没有server目录）出VS2013的项目文件.
+	（10）打开VS2013的项目文件，然后生成项目
+    FreeRDP-server系统配置：
+	(1)拷贝 server/Windows/server.crt and server.key 到 C:\Users\XXX\.config\freerdp\server,其中如果没有相应目录需创建
+	(2)用winpr/tools/hash/winpr-hash.exe -u xxx -p xxx 创建得到的内容保存为文件SAM，并文件拷贝到 C:/目录下
+    FreeRDP使用：
+	（1）cd Debug目录下
+	（2）命令执行wfreerdp.exe /u:administrator /sec:rdp /usb:id,dev:XXXX:XXXX /v:192.168.5.84
+    FreeRDP-server使用：
+	（1）cd Debug目录下
+	（2）命令执行 wfreerdp-server.exe
+
+参考文献：
+	（1）windows环境下编译FreeRDP（http://www.cnblogs.com/sherwin-security/archive/2012/07/13/2590965.html）
+	（2）Ubuntu12编译FreeRDP（http://blog.csdn.net/liuyifeng_510/article/details/9833197）
+	（3）how to use freerdp-server? it seems that some file is missing（https://github.com/FreeRDP/FreeRDP/issues/1060）
