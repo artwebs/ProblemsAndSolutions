@@ -1,0 +1,20 @@
+试用Cocos2d-x v3.0遇到的问题及解决方法
+1、无法进行调试
+问题：
+	开始http://blog.csdn.net/cabxyz/article/details/22085637介绍的方法进行试用，编译没问题，但是用Debug的时候不能像官方所说的进行调试。
+解决方法：
+	到官方网站下载Cocos2d-x、Cocos2d-JS和Cocos Code IDE（主要参考：http://www.cocos2d-x.org/wiki/Code_Editor），重新安装进行解决。
+	
+
+2、runtime时候mac及ios编译失败
+问题：
+	点击项目》右键》runtime时候，mac及ios编译失败，android 编译成功。
+解决方法：
+	进入相关目录，然后找到那个是Prefix.pch的文件，按住command+A全选，删除里面的内容，按住command+R进行编译运行;报错后,再按command+z，恢复里面的内容，再按command+R进行编译运行，错误就没有了。
+	mac:
+	XXXXXX/frameworks/runtime-src/proj.ios_mac/mac/Prefix.pch 
+	ios:
+	XXXXXX/frameworks/runtime-src/proj.ios_mac/ios/Prefix.pch 
+
+
+
