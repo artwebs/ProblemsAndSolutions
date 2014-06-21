@@ -1,0 +1,226 @@
+1、ssh-server配置
+sudo apt-get install openssh-server
+ps -e |grep sshd
+
+2 打开防火强
+sudo iptables -L
+sudo iptables -A INPUT -p tcp --dport ssh -j ACCEPT
+
+
+3 安装nginx
+sudo apt-get install nginx
+安装成功后，启动nginx 输入如下命令：
+icecool@ubuntu:~$ sudo /etc/init.d/nginx start
+可以看到nginx已经启动成功。
+Starting nginx: nginx.
+spawn-fcgi.c.197: child spawned successfully: PID: 9772
+打开浏览器，输入127.0.0.1,可以看到nginx的欢迎欢迎画面，显示
+
+Welcome to nginx!
+看到这里,说明你已安装上了nginx了.接下来我们要来配置它.设置启动系统时会自动启动它.
+icecool@ubuntu:~$ update-rc.d nginx defaults
+提示:System startup links for /etc/init.d/nginx already exist.
+
+4 安装php
+icecool@ubuntu:~$ sudo apt-get install php5-cgi php5-mysql php5-curl php5-gd php5-idn php-pear php5-imagick php5-imap php5-mcrypt php5-memcache php5-mhash php5-ming php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl
+
+稍等一会，等安装好后，接下来我们要配置php.ini这个文件,在修改配置文件之前你最好要做一个备份.
+icecool@ubuntu:~$ cd /etc/php5/cgi
+可以看到该目录下有我们需要配置的php.ini文件,现做一下备份吧。
+icecool@ubuntu:/etc/php5/cgi$ sudo cp -i php.ini php.ini.bak
+备份成功后，我们打开php.ini配置文件
+icecool@ubuntu:/etc/php5/cgi$ sudo gedit php.ini
+在php.ini这个文件里添加下一行
+cgi.fix_pathinfo = 1
+保存
+
+
+5 安装lighttpd
+
+icecool@ubuntu:~$ sudo apt-get install lighttpd
+
+
+安装完接下来要移除它的自动启动程序让它不自动启动.
+
+
+icecool@ubuntu:~$ update-rc.d -f lighttpd remove
+Removing any system startup links for /etc/init.d/lighttpd …
+/etc/rc0.d/K09lighttpd
+/etc/rc1.d/K09lighttpd
+/etc/rc2.d/S91lighttpd
+/etc/rc3.d/S91lighttpd
+/etc/rc4.d/S91lighttpd
+/etc/rc5.d/S91lighttpd
+/etc/rc6.d/K09lighttpd
+
+开启PHP FastCGI 设置听的端口9000上运行的本地用户和www-data, 运行下面程序:
+
+
+icecool@ubuntu:~$ /usr/bin/spawn-fcgi -a 127.0.0.1 -p 9000 -u www-data -g www-data -f /usr/bin/php5-cgi -P /var/run/fastcgi-php.pid
+
+显示 spawn-fcgi.c.197: child spawned successfully: PID: 29470
+
+修改rc.local 这个文件.先备份一个.
+
+
+icecool@ubuntu:~$ cp /etc/rc.local .
+icecool@ubuntu:~$ sudo gedit /etc/rc.local
+添加
+/usr/bin/spawn-fcgi -a 127.0.0.1 -p 9000 -u www-data -g www-data -f /usr/bin/php5-cgi -P /var/run/fastcgi-php.pid
+
+6 配置nginx
+
+icecool@ubuntu:~$ sudo apt-get install nginx
+
+
+提示安装成功后，我们打开nginx的配置文件进行一下配置，还是一样，更改配置文件前先备份一下。
+
+icecool@ubuntu:/etc/nginx$ sudo cp -i nginx.conf nginx.conf.bak
+
+icecool@ubuntu:/etc/nginx$ sudo gedit nginx.conf
+
+打开配置文件后，输入下列内容，你也可以根据你自己的情况配置，以下是我的配置信息：
+
+user www-data;
+worker_processes 8;
+
+error_log /var/log/nginx/error.log;
+pid /var/run/nginx.pid;
+
+events {
+use epoll;
+worker_connections 51200;
+}
+
+http {
+include /etc/nginx/mime.types;
+default_type application/octet-stream;
+
+charset utf8;
+
+server_names_hash_bucket_size 128;
+client_header_buffer_size 32k;
+large_client_header_buffers 4 32k;
+client_max_body_size 8m;
+
+access_log /var/log/nginx/access.log;
+
+sendfile on;
+tcp_nopush on;
+
+keepalive_timeout 60;
+tcp_nodelay on;
+
+fastcgi_connect_timeout 300;
+fastcgi_send_timeout 300;
+fastcgi_read_timeout 300;
+fastcgi_buffer_size 64k;
+fastcgi_buffers 4 64k;
+fastcgi_busy_buffers_size 128k;
+fastcgi_temp_file_write_size 128k;
+
+gzip on;
+gzip_min_length 1k;
+gzip_buffers 4 16k;
+gzip_http_version 1.0;
+gzip_comp_level 2;
+gzip_types text/plain application/x-javascript text/css application/xml;
+gzip_vary on;
+
+include /etc/nginx/conf.d/*.conf;
+include /etc/nginx/sites-enabled/*;
+}
+
+
+保存退出。接下来进入sites-available去配置另一个文件。
+
+icecool@ubuntu:/etc/nginx$ cd sites-available
+icecool@ubuntu:/etc/nginx/sites-available$
+
+还是老规矩，修改前现备份
+icecool@ubuntu:/etc/nginx/sites-available$ sudo cp -i default default.bak
+icecool@ubuntu:/etc/nginx/sites-available$ sudo gedit default
+
+打开文件后，输入我的配置信息，你可以按照你的实际情况配置，我的仅供参考。
+
+server {
+listen 80;
+server_name localhost;
+index index.php index.html index.htm;
+access_log /var/log/nginx/localhost.access.log;
+charset utf8;
+
+location / {
+root /var/www/nginx-default;
+index index.php index.html index.htm;
+}
+
+location /doc {
+root /usr/share;
+autoindex on;
+allow 127.0.0.1;
+deny all;
+}
+
+location /images {
+root /usr/share;
+autoindex on;
+}
+
+#error_page 404 /404.html;
+
+# redirect server error pages to the static page /50x.html
+
+error_page 500 502 503 504 /50x.html;
+
+location = /50x.html {
+root /var/www/nginx-default;
+}
+
+# proxy the PHP scripts to Apache listening on 127.0.0.1:80
+#location ~ \.php$ {
+#fastcgi_pass 127.0.0.1:80;
+#fastcgi_index index.php;
+#fastcgi_param SCRIPT_FILENAME /scripts$fastcgi_script_name;
+#includefastcgi_params;
+#}
+
+# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+location ~ \.php {
+fastcgi_pass 127.0.0.1:9000;
+fastcgi_index index.php;
+
+# 解决thinkphp的path_info问题
+set $path_info “/”;
+set $real_script_name $fastcgi_script_name;
+if ($fastcgi_script_name ~ “^(.+?\.php)(/.+)$”) {
+set $real_script_name $1;
+set $path_info $2;
+}
+fastcgi_param SCRIPT_FILENAME /var/www/nginx-default/$real_script_name;
+fastcgi_param SCRIPT_NAME $real_script_name;
+fastcgi_param PATH_INFO $path_info;
+include /etc/nginx/fastcgi_params;
+}
+
+}
+
+保存退出，经过以上步骤，基本配置好了，接下来创建一个phpinfo页面测试一下。
+
+icecool@ubuntu:~$ sudo vi /var/www/nginx-default/info.php
+
+输入如下内容：
+
+phpinfo();
+?>
+
+重起nginx
+
+icecool@ubuntu:~$ sudo /etc/init.d/nginx restart
+icecool@ubuntu:~$ sudo /etc/init.d/lighttpd stop
+
+这lighttp 要关了.要不然会网页显示会给跑到这里来.因为nginx & ligttpd两个同时打开也会发生冲突的.而这里我们只是用到lighttp的插件所以没有必要开启.
+
+在浏览器地址栏里输入http://127.0.0.1/info.php
+
+正常情况下可以看到phpinfo了。
