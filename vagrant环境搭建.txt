@@ -1,0 +1,94 @@
+1. Vagrant功能:
+     Vagrant uses Oracle’s VirtualBox to build configurable, lightweight, and portable virtual machines dynamically..
+      【Vagrant 使用Oracle VM VirtualBox 动态创建和配置轻量级的，可重现的，便携的虚拟机环境。】
+
+2. Vagrant下载:
+      http://downloads.vagrantup.com/tags/v1.0.5
+
+3. Vagrant安装:
+       3.1. 下载并安装Oracle VM VirtualBox: 例如在Windows环境下，需要安装VirtualBox-4.2.0-80737-Win.exe
+
+               https://www.virtualbox.org/wiki/Downloads
+
+       3.2. 下载并安装最新版本的Vagrant:
+
+              http://downloads.vagrantup.com/
+
+       [注]在 Windows and Mac OS X,vagrant 命令应该自动添加到环境变量PATH. 但是在其他操作系统下, 你必须手动添加/opt/vagrant/bin 到环境变量PATH。
+
+4. Vagrant命令
+       Vagrant安装完成之后，我们就可以从命令行通过vagrant命令来进行操作。vagrant 常用命令如下：
+
+       vagrant box add <name> <url>
+       vagrant box list
+       vagrant box remove <name>
+       vagrant box repackage <name> 
+       vagrant init [box-name] [box-url]
+       vagrant up [vm-name] [--[no-]provision] [-h]
+       vagrant destroy [vm-name]
+       vagrant suspend [vm-name]
+       vagrant reload [vm-name]
+       vagrant resume [vm-name]
+       vagrant halt [vm-name]
+       vagrant status [vm-name] 
+       vagrant package [vm-name] [--base name] [--output name.box][--include one,two,three] [--vagrantfile file]
+       vagrant provision [vm-name]
+       vagrant ssh [vm-name] [-c command] [-- extra ssh args]
+       vagrant ssh-config [vm-name] [--host name]
+
+5. Vagrantfile
+       任何Vagrant工程下都有一个Vagrantfile, 就像makefile一样，Vagrantfile用来配置vagrant的行为所创建虚拟机的信息，下面是一个基本的Vagrantfile：      
+
+       Vagrant::Config.run do |config|
+           # Setup the box
+           config.vm.box = "my_box"
+       end
+6. 创建第一个Vagrant虚拟环境以及工程:
+(1)创建工程目录， 并且执行vagrant init命令，该命令会产生最初的 Vagrantfile
+
+$ mkdir vagrant_guide
+$ cd vagrant_guide
+$ vagrant init
+
+
+(2)添加一个Base Box:
+
+     Vagrant不是从头开始创建虚拟机，而是导入一个虚机的base image，在这个基础上进行构建。这些image就叫做Box.
+
+     Vagrant 支持从本地文件系统或者HTTP URL来添加boxes
+
+    $vagrant box add base http://files.vagrantup.com/lucid32.box
+
+     $vagrant box add base D:\lucid32.box
+(3)配置Project使用这个Box: 修改Vagrantfile为如下内容：
+
+     Vagrant::Config.run do |config|
+        config.vm.box = "base"
+     end
+
+(4)启动虚拟机
+
+    $vagrant up
+
+    
+
+(5)停掉虚拟机
+
+    $vagrant destroy
+
+(6) SSH配置
+
+     Vagrant 提供了对虚拟机的SSH连接，只需要执行一个命令：
+
+    $vagrant ssh
+    
+(7)访问刚才创建的Project.
+
+     Vagrant 通过VirtualBox的shared folder来连接你的application和虚拟机， 默认的shared folder的卫士是/vagrant， 所以想要查看刚才创建的项目，只需要执行：
+
+     vagrant@lucid32:~$ ls /vagrant
+     index.html  Vagrantfile
+
+(8) Provisioning：
+
+      通常情况下Box只做最基本的设置，而不是一次到位的设置好所有的环境。Vagrant通常使用chef或者Puppet来做进一步的环境搭建。

@@ -22,7 +22,7 @@ icecool@ubuntu:~$ update-rc.d nginx defaults
 提示:System startup links for /etc/init.d/nginx already exist.
 
 4 安装php
-icecool@ubuntu:~$ sudo apt-get install php5-cgi php5-mysql php5-curl php5-gd php5-idn php-pear php5-imagick php5-imap php5-mcrypt php5-memcache php5-mhash php5-ming php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl
+icecool@ubuntu:~$ sudo apt-get install php5-cgi php5-mysql php5-curl php5-gd php5-idn php-pear php5-imagick php5-imap php5-mcrypt php5-memcache php5-mhash php5-ming php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl 
 
 稍等一会，等安装好后，接下来我们要配置php.ini这个文件,在修改配置文件之前你最好要做一个备份.
 icecool@ubuntu:~$ cd /etc/php5/cgi
@@ -224,3 +224,5 @@ icecool@ubuntu:~$ sudo /etc/init.d/lighttpd stop
 在浏览器地址栏里输入http://127.0.0.1/info.php
 
 正常情况下可以看到phpinfo了。
+
+/home/www/wwwroot

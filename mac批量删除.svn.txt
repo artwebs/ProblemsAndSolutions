@@ -1,0 +1,3 @@
+mac批量删除.svn
+
+find . -name ".svn" -exec rm -Rf {} \;

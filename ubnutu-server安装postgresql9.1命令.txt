@@ -1,0 +1,24 @@
+
+
+安装就不说了，反正如果直接apt-get目前是拿不到最新的版本的，直接apt-get install postgresql-9.3会告诉你找不到，得到到http://www.postgresql.org/download/linux/ubuntu/去看，
+首先要创建一个文件：/etc/apt/sources.list.d/pgdg.list，需要root权限，追加一行内容
+deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main
+然后导入从https://www.postgresql.org/media/keys/ACCC4CF8.asc导入repository key
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+sudo apt-get update
+sudo apt-get install postgresql-9.3 pgadmin3
+安装完毕要配置了，#sudo -u postgres psql(用postgres登录psql)
+postgres#\password postgres（在psql环境为postgres用户指定密码，退出是\q)
+在postgres环境中  \q;得到配置文件所在的目录
+修改配置文件postgresql.conf: listen_address='*' password_encryption=on
+确认pg_hba.conf: host all all 127.0.0.1/32 md5没有被注释
+host all all 0.0.0.0 0.0.0.0 md5
+sudo service postgresql restart
+配置完成
+Mysql忘记root密码后还是需要一点手脚的，发觉postgresql基本没啥特别之处
+ 修改pg_hba.conf中的host all all 127.0.0.1/32 md5 为host all all 127.0.0.1/32 trust然后sudo -u postgres psql直接就进去了
+ 
+ 
+ sudo apt-get install python-psycopg2
+ 解决Error from pip install psycopg2
+apt-get install libpq-dev
