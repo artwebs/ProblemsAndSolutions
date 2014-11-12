@@ -1,0 +1,73 @@
+sudo apt-get install openssh-server openssh-client
+接下来可以ssh远程登录进行控制安装其他软件
+
+sudo apt-get install vim
+sudo apt-get install git-core
+sudo apt-get install python-setuptools
+
+创建用户git
+sudo adduser --system --shell /bin/bash --disabled-password --group git
+创建密码
+sudo passwd git
+
+创建git仓库存储目录
+
+sudo mkdir /home/git/repositories
+
+设置git仓库权限
+
+sudo chown git:git /home/git/repositories
+sudo chmod 777 /home/git/repositories
+
+初始化全局设置
+
+git config --global user.name "gitserver"
+git config --global user.email "gitserver@server"
+
+获取并安装gitosis
+
+sudo git clone https://github.com/ossxp-com/gitosis.git
+cd gitosis
+sudo python setup.py install
+
+配置gitosis(客户端的id_rsa.pub)
+
+生成本机密钥 
+ssh-keygen -t rsa -C gitserver
+连续回车
+
+
+初使化gitosis，切回到服务器
+sudo -H -u git gitosis-init < /root/.ssh/id_rsa.pub
+
+修改post-update权限
+sudo chmod 755 /home/git/repositories/gitosis-admin.git/hooks/post-update
+
+
+clone gitosis管理平台
+
+cd /tmp
+git clone git@localhost:gitosis-admin.git
+cd gitosis-admin
+
+到此git服务器配置完成，以下是git服务器的一些常用管理。
+
+添加用户
+要添加的用户在电脑上运行ssh-keygen -t rsa生成id_rsa.pub发送给git管理员
+git管理员将用户的id_rsa.pub复制到gitosis-admin下的keydir目录下，将文件名修改为要
+添加的用户名
+git管理员修改gitosis-admin目录下的gitosis.conf文件，在要授权的项目下的members一>行添加该用户名，中间以空格隔开
+上传修改
+cd gitosis-admin
+git add gitosis.conf
+cd keydir
+git add {用户的id_rsa.pub文件名}
+git commit -m "添中用户XXX"
+git push
+
+
+git修改ssh端口后，在本机.ssh目录下新建config文件
+添加内容
+host artwebsorg
+hostname xxx.xxx.xxx
+port 22xx
