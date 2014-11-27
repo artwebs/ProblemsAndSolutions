@@ -1,0 +1,25 @@
+ubuntu中openoffice的安装及使用
+下载安装包
+	http://www.openoffice.org/download/index.html
+
+安装	
+tar -zxvf Apache_OpenOffice_4.1.1_Linux_x86-64_install-deb_zh-CN.tar.gz
+cd DEBS
+sudo dpkg -i *.deb
+cd desktop-integration
+sudo dpkg -i *.deb
+
+启动服务：
+/opt/openoffice4/program/soffice  -headless -accept="socket,host=127.0.0.1,port=8100;urp;" -nofirststartwizard &
+
+下载转化包 http://sourceforge.net/u/mnasato/profile/
+解压 jodconverter-2.2.2.zip
+
+转换命令：
+java -jar lib/jodconverter-cli-2.2.2.jar 2.doc 2.pdf
+java -jar lib/jodconverter-cli-2.2.2.jar 2.doc 2.html
+
+
+ubuntu 中文字体转换问题解决：
+1、拷贝windos中字体(C:\windows\fonts) 到ubuntu中（/usr/share/fonts/xpfont）中
+2、运行 fc-cache -fv
