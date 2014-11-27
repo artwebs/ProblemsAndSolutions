@@ -23,5 +23,8 @@ java -jar lib/jodconverter-cli-2.2.2.jar 2.doc 2.html
 ubuntu 中文字体转换问题解决：
 1、拷贝windos中字体(C:\windows\fonts) 到ubuntu中（/usr/share/fonts/xpfont）中
 2、运行 fc-cache -fv
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> d0fce231de819b5c9ed3f76befc23809dca7e167

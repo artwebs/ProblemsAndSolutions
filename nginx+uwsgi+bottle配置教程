@@ -1,13 +1,16 @@
 apt-get install nginx
 apt-get install uwsgi
-vi /etc/uwsgi/apps-available/artwebs_uwsig.ini
+sudo apt-get install uwsgi uwsgi-plugin-python
+chown -R www-data:www-data /data/wwwroot/python/ArtPyWeb
+chmod -R 775 /data/wwwroot/python/ArtPyWeb
+
+
+vi /etc/uwsgi/apps-enabled/artwebs_uwsig.ini
 [uwsgi]
 plugins=python
 vhost=true
 socket=127.0.0.1:9901
 
-
-ln -s /etc/uwsgi/apps-available/artwebs_uwsig.ini /etc/uwsgi/apps-enabled/artwebs_uwsig.ini
 
 
 vi /etc/nginx/sites-available/default
