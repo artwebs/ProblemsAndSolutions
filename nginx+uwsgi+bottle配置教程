@@ -6,7 +6,7 @@ chmod -R 775 /data/wwwroot/python/ArtPyWeb
 
 
 vi /etc/uwsgi/apps-enabled/artwebs_uwsig.ini
-[uwsgi]
+I
 plugins=python
 vhost=true
 socket=127.0.0.1:9901
